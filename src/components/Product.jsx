@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ProductListing from './ProductListing'
+import { useDispatch } from 'react-redux'
+import addInfo from '../redux/ProductSlice'
 
 export default function Product() {
     const [data, setData] = useState([])
+    const dispatch = useDispatch()
     useEffect(() => {
         axios.get('https://fakestoreapiserver.reactbd.com/products').then((res) => {
             console.log(res)
             setData(res.data)
+            dispatch(addInfo(res.data))
         }).catch((err) => {
             console.log(err)
         })
